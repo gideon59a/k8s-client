@@ -1,0 +1,47 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /etc/kubernetes/ssl/ca.pem
+    server: https://172.21.1.10:8443
+  name: bcmt-kubernetes
+contexts:
+- context:
+    cluster: bcmt-kubernetes
+    namespace: cbam
+    user: cbamUser
+  name: cbamUser-context
+- context:
+    cluster: bcmt-kubernetes
+    namespace: office
+    user: employee
+  name: employee-context
+- context:
+    cluster: bcmt-kubernetes
+    namespace: play
+    user: gideon
+  name: gideon-context
+- context:
+    cluster: bcmt-kubernetes
+    namespace: default
+    user: kubectl
+  name: kubectl-context
+current-context: kubectl-context
+kind: Config
+preferences: {}
+users:
+- name: cbamUser
+  user:
+    client-certificate: /root/gideon/RBAC/cbamUser.crt
+    client-key: /root/gideon/RBAC/cbamUser.key
+- name: employee
+  user:
+    client-certificate: /root/gideon/RBAC/employee.crt
+    client-key: /root/gideon/RBAC/employee.key
+- name: gideon
+  user:
+    client-certificate: /root/gideon/RBAC/gideon.crt
+    client-key: /root/gideon/RBAC/gideon.key
+- name: kubectl
+  user:
+    client-certificate: /etc/kubernetes/ssl/cluster-admin.pem
+    client-key: /etc/kubernetes/ssl/cluster-admin-key.pem
